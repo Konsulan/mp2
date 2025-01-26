@@ -2,6 +2,10 @@
 
 let canvas = document.getElementById('game');
 let ctx = canvas.getContext('2d');
+let img1 = new Image();
+img1.src = "../images/player1.png";
+let img2 = new Image();
+img2.src = "../images/player2.png";
 
 
 let board = [];
@@ -26,22 +30,18 @@ function drawBoard() {
         ctx.lineTo(600, 200*(i+1));
     }
     ctx.stroke();
-
-    ctx.beginPath();
     for (let i=0; i < board.length; i++) {
         for (let j=0; j < board[i].length; j++) {
             // draw player 1
             if (board[i][j] == 1) {
-                
+                ctx.drawImage(img1, j*200+50, i*200+50);
             } 
             // draw player 2
             else if (board[i][j] == 2) {
-
+                ctx.drawImage(img2, j*200+50, i*200+50);
             }
-
         }
     }
-    ctx.stroke();
 }
 
 function createBoard() {
@@ -79,6 +79,9 @@ function move(canvas, event) {
             board[2][2] = 1;
         }
     }
+
+    // random movement
+    console.log(board);
     drawBoard();
 }
 
