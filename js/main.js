@@ -2,17 +2,21 @@
 
 let canvas = document.getElementById('game');
 let ctx = canvas.getContext('2d');
+let board = [];
+let winner = null;
+let x_moves = 0;
+let last_x_move = 0;
+let last_y_move = 0;
+let locked = false;
+
 let img1 = new Image();
 img1.src = "./images/player1.png";
 let img2 = new Image();
 img2.src = "./images/player2.png";
 
 
-let board = [];
-let winner = null;
-
 /** 
- * Zeichnet das raster des Spielfelds
+ * Zeichnet das komplette Spielfeld
  * Felder:  0   - 200
  *          200 - 400
  *          400 - 600
@@ -88,13 +92,20 @@ function check_win() {
 }
 
 function createBoard() {
-    board = [[0, 0, 0], [0, 2, 0], [0, 0, 0]];
+    board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
     winner = null;
+    x_moves = 0;
+    locked = true;
     drawBoard();
+    sleep(1500).then(() => {
+        board[1][1] = 2;
+        drawBoard();
+        locked = false;
+    });
 }
 
 function move(canvas, event) {
-    if (winner === null) {
+    if (winner === null && !locked) {
         // player movement
         const rect = canvas.getBoundingClientRect()
         const x = event.clientX - rect.left
@@ -109,37 +120,104 @@ function move(canvas, event) {
                 move_made = true;
             }
         }
+        drawBoard();
         check_win();
         if (winner !== null) {
             return;
         }
 
-        // random movement
-        let move_x = 0;
-        let move_y = 0;
-        let check = false;
-        let full = true;
-        do {
-            move_x = Math.floor(Math.random() * 3); 
-            move_y = Math.floor(Math.random() * 3);
-            // only if there are still moves available
-            for (let i=0; i < board.length; i++) {
-                for (let j=0; j < board[i].length; j++){
-                    if (board[i][j] == 0) 
-                        full = false;
-                }
-            }
-            check = !full && ((board[move_y][move_x] == 1) || (board[move_y][move_x] == 2)); 
-        } while(check);
-        
-        if (!full && move_made) {
-            board[move_y][move_x] = 2;
-        }
 
-        check_win();
-        drawBoard();
+
+        // random movement
+        locked = true;
+        sleep(1500).then(() => {
+            let move_x = 0;
+            let move_y = 0;
+            let check = false;
+            let full = true;
+            if(x_moves < 1) {
+                do {
+                    move_x = Math.floor(Math.random() * 3); 
+                    move_y = Math.floor(Math.random() * 3);
+                    // only if there are still moves available
+                    for (let i=0; i < board.length; i++) {
+                        for (let j=0; j < board[i].length; j++){
+                            if (board[i][j] == 0) 
+                                full = false;
+                        }
+                    }
+                    check = !full && ((board[move_y][move_x] == 1) || (board[move_y][move_x] == 2)); 
+                } while(check);
+                
+                if (!full && move_made) {
+                    x_moves++;
+                    board[move_y][move_x] = 2;
+                    last_x_move = move_x;
+                    last_y_move = move_y;
+                }
+            } else {
+                switch(last_y_move) {
+                    case 0:
+                        switch(last_x_move) {
+                            case 0:
+                                move_y = 2;
+                                move_x = 2;
+                                break;
+                            case 1:
+                                move_y = 2;
+                                move_x = 1;
+                                break;
+                            case 2:
+                                move_y = 2;
+                                move_x = 0;
+                                break;
+                        }
+                        break;    
+                    case 1:
+                        switch(last_x_move) {
+                            case 0:
+                                move_y = 1;
+                                move_x = 2;
+                                break;
+                            case 2:
+                                move_y = 1;
+                                move_x = 0;
+                                break;
+                        }
+                        break;
+                    case 2:
+                        switch(last_x_move) {
+                            case 0:
+                                move_y = 0;
+                                move_x = 2;
+                                break;
+                            case 1:
+                                move_y = 0;
+                                move_x = 1;
+                                break;
+                            case 2:
+                                move_y = 0;
+                                move_x = 0;
+                                break;
+                        }
+                        break;
+                }
+                board[move_y][move_x] = 2;
+            }
+
+            check_win();
+            drawBoard();
+            locked = false;
+        });
     }
 }
+
+// sleep time expects milliseconds
+function sleep (time) {
+    return new Promise((resolve) => setTimeout(resolve, time));
+}
+  
+  
 
 function main() {
     createBoard();
