@@ -1,0 +1,9 @@
+h1 {
+    text-align: center;
+}
+
+#game {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

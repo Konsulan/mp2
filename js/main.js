@@ -9,6 +9,7 @@ img2.src = "./images/player2.png";
 
 
 let board = [];
+let winner = null;
 
 /** 
  * Zeichnet das raster des Spielfelds
@@ -44,8 +45,31 @@ function drawBoard() {
     }
 }
 
+function check_win() {
+    // check horizontal
+    for (let i=0; i < board.length; i++) {
+        if (board[i][0] == 1 && board[i][1] == 1 && board[i][2] == 1) {
+            winner = 'player 1';
+        } else if (board[i][0] == 2 && board[i][1] == 2 && board[i][2] == 2) {
+            winner = 'player 2';
+        }
+    }
+
+    // check vertical
+    for (let i=0; i < board.length; i++) {
+        if (board[0][i] == 1 && board[1][i] == 1 && board[2][i] == 1) {
+            winner = 'player 1';
+        } else if (board[0][i] == 2 && board[1][i] == 2 && board[2][i] == 2) {
+            winner = 'player 2';
+        }
+    }
+
+    console.log(winner);
+}
+
 function createBoard() {
     board = [[0, 0, 0], [0, 2, 0], [0, 0, 0]];
+    winner = null;
     drawBoard();
 }
 
@@ -56,10 +80,12 @@ function move(canvas, event) {
     const y = event.clientY - rect.top
     let place_x = Math.floor(x / 200);
     let place_y = Math.floor(y / 200);
+    let move_made = false;
     console.log(place_x)
     if (place_x <= 3 && place_y <= 3) {
         if (board[place_y][place_x] == 0) {
             board[place_y][place_x] = 1;
+            move_made = true;
         }
     }
     
@@ -81,11 +107,11 @@ function move(canvas, event) {
         check = !full && ((board[move_y][move_x] == 1) || (board[move_y][move_x] == 2)); 
     } while(check);
     
-    if (!full) {
+    if (!full && move_made) {
         board[move_y][move_x] = 2;
     }
 
-    console.log(board);
+    check_win();
     drawBoard();
 }
 
