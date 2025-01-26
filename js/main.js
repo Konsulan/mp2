@@ -45,6 +45,10 @@ function drawBoard() {
     }
 }
 
+function announce_win() {
+    console.log('winner: ' + winner);
+}
+
 function check_win() {
     // check horizontal
     for (let i=0; i < board.length; i++) {
@@ -64,7 +68,23 @@ function check_win() {
         }
     }
 
-    console.log(winner);
+    // check diagonal
+    if (board[0][0] == 1 && board[1][1] == 1 && board[2][2] == 1) {
+        winner = 'player 1';
+    } else if(board[0][0] == 2 && board[1][1] == 2 && board[2][2] == 2) {
+        winner = 'player 2';
+    } else if (board[0][2] == 1 && board[1][1] == 1 && board[2][0] == 1) {
+        winner = 'player 1';
+    } else if (board[0][2] == 2 && board[1][1] == 2 && board[2][0] == 2) {
+        winner = 'player 2';
+    }
+
+    if (winner !== null) {
+        announce_win();
+        return true;
+    }
+
+    return false
 }
 
 function createBoard() {
@@ -74,45 +94,51 @@ function createBoard() {
 }
 
 function move(canvas, event) {
-    // player movement
-    const rect = canvas.getBoundingClientRect()
-    const x = event.clientX - rect.left
-    const y = event.clientY - rect.top
-    let place_x = Math.floor(x / 200);
-    let place_y = Math.floor(y / 200);
-    let move_made = false;
-    console.log(place_x)
-    if (place_x <= 3 && place_y <= 3) {
-        if (board[place_y][place_x] == 0) {
-            board[place_y][place_x] = 1;
-            move_made = true;
-        }
-    }
-    
-    // random movement
-    let move_x = 0;
-    let move_y = 0;
-    let check = false;
-    let full = true;
-    do {
-        move_x = Math.floor(Math.random() * 3); 
-        move_y = Math.floor(Math.random() * 3);
-        // only if there are still moves available
-        for (let i=0; i < board.length; i++) {
-            for (let j=0; j < board[i].length; j++){
-                if (board[i][j] == 0) 
-                    full = false;
+    if (winner === null) {
+        // player movement
+        const rect = canvas.getBoundingClientRect()
+        const x = event.clientX - rect.left
+        const y = event.clientY - rect.top
+        let place_x = Math.floor(x / 200);
+        let place_y = Math.floor(y / 200);
+        let move_made = false;
+        console.log(place_x)
+        if (place_x <= 3 && place_y <= 3) {
+            if (board[place_y][place_x] == 0) {
+                board[place_y][place_x] = 1;
+                move_made = true;
             }
         }
-        check = !full && ((board[move_y][move_x] == 1) || (board[move_y][move_x] == 2)); 
-    } while(check);
-    
-    if (!full && move_made) {
-        board[move_y][move_x] = 2;
-    }
+        check_win();
+        if (winner !== null) {
+            return;
+        }
 
-    check_win();
-    drawBoard();
+        // random movement
+        let move_x = 0;
+        let move_y = 0;
+        let check = false;
+        let full = true;
+        do {
+            move_x = Math.floor(Math.random() * 3); 
+            move_y = Math.floor(Math.random() * 3);
+            // only if there are still moves available
+            for (let i=0; i < board.length; i++) {
+                for (let j=0; j < board[i].length; j++){
+                    if (board[i][j] == 0) 
+                        full = false;
+                }
+            }
+            check = !full && ((board[move_y][move_x] == 1) || (board[move_y][move_x] == 2)); 
+        } while(check);
+        
+        if (!full && move_made) {
+            board[move_y][move_x] = 2;
+        }
+
+        check_win();
+        drawBoard();
+    }
 }
 
 function main() {
