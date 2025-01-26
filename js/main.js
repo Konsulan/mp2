@@ -3,9 +3,9 @@
 let canvas = document.getElementById('game');
 let ctx = canvas.getContext('2d');
 let img1 = new Image();
-img1.src = "../images/player1.png";
+img1.src = "./images/player1.png";
 let img2 = new Image();
-img2.src = "../images/player2.png";
+img2.src = "./images/player2.png";
 
 
 let board = [];
@@ -45,7 +45,7 @@ function drawBoard() {
 }
 
 function createBoard() {
-    board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
+    board = [[0, 0, 0], [0, 2, 0], [0, 0, 0]];
     drawBoard();
 }
 
@@ -54,33 +54,37 @@ function move(canvas, event) {
     const rect = canvas.getBoundingClientRect()
     const x = event.clientX - rect.left
     const y = event.clientY - rect.top
-    if (x <= 200) {
-        if (y <= 200) {
-            board[0][0] = 1;
-        } else if (y <= 400) {
-            board[1][0] = 1;
-        } else if (y <= 600) {
-            board[2][0] = 1;
-        }
-    } else if (x <= 400) {
-        if (y <= 200) {
-            board[0][1] = 1;
-        } else if (y <= 400) {
-            board[1][1] = 1;
-        } else if (y <= 600) {
-            board[2][1] = 1;
-        }
-    } else if (x <= 600) {
-        if (y <= 200) {
-            board[0][2] = 1;
-        } else if (y <= 400) {
-            board[1][2] = 1;
-        } else if (y <= 600) {
-            board[2][2] = 1;
+    let place_x = Math.floor(x / 200);
+    let place_y = Math.floor(y / 200);
+    console.log(place_x)
+    if (place_x <= 3 && place_y <= 3) {
+        if (board[place_y][place_x] == 0) {
+            board[place_y][place_x] = 1;
         }
     }
-
+    
     // random movement
+    let move_x = 0;
+    let move_y = 0;
+    let check = false;
+    let full = true;
+    do {
+        move_x = Math.floor(Math.random() * 3); 
+        move_y = Math.floor(Math.random() * 3);
+        // only if there are still moves available
+        for (let i=0; i < board.length; i++) {
+            for (let j=0; j < board[i].length; j++){
+                if (board[i][j] == 0) 
+                    full = false;
+            }
+        }
+        check = !full && ((board[move_y][move_x] == 1) || (board[move_y][move_x] == 2)); 
+    } while(check);
+    
+    if (!full) {
+        board[move_y][move_x] = 2;
+    }
+
     console.log(board);
     drawBoard();
 }
