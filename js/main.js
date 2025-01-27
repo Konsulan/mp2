@@ -237,6 +237,10 @@ function acceptTerms(){
     document.getElementById("terms_banner").style.display = "none";
     localStorage.setItem("accepted_all", true);
 }
+
+function showTerms(){
+    document.getElementById("terms_banner").style.display = "block";
+}
   
   
 
@@ -250,7 +254,7 @@ function main() {
     if(localStorage.getItem("accepted_all")){
         acceptTerms();
     }
-
+    document.getElementById("settings").addEventListener("click",showTerms);
     document.getElementById("accept").addEventListener("click", acceptTerms);
     document.getElementById("accept_all").addEventListener("click", acceptTerms);
     document.getElementById("continue").addEventListener("click", acceptTerms);

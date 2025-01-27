@@ -15,11 +15,25 @@ h1 {
     border-width: 1px;
     border-style: solid;
 
+    padding: 75px;
+    border-radius: 4px;
     position: absolute;
     z-index: 1;
     top:50%;
     left:50%;
     transform: translate(-50%, -50%);
+}
+
+#settings {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    color: #dfcfcfaf;
+    background-color: transparent;
+    border-width: 0px;
+}
+#settings:hover{
+    color: #ccbabae7;
 }
 
 h2 {
