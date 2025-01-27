@@ -7,3 +7,54 @@ h1 {
     margin-left: auto;
     margin-right: auto;
 }
+
+.card {
+    background-color: white;
+    border-color: black;
+    text-align: center;
+    border-width: 1px;
+    border-style: solid;
+
+    position: absolute;
+    z-index: 1;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+}
+
+.banner {
+    padding: 50px;
+    border-radius: 4px;
+}
+
+.button {
+    padding: 10px;
+    border-radius: 4px;
+}
+
+ul {
+    text-align: left;
+}
+
+#accept {
+    background-color: #008000;
+    color:white;
+}
+
+#accept_all {
+    background-color: #ff0000;
+    color:white;
+}
+
+#edit_button {
+    padding: 10px;
+    background-color: transparent;
+    border-width: 0px;
+    color: #dfcfcf67;
+    border-width: 1px;
+    border-color: transparent;
+}
+#edit_button:hover{
+    border-width: 1px;
+    border-color: #dfcfcf1f;
+}

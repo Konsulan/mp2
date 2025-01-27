@@ -14,6 +14,11 @@ img1.src = "./images/player1.png";
 let img2 = new Image();
 img2.src = "./images/player2.png";
 
+let rematch_card = document.getElementById("rematch_card");
+let play_again_button = document.getElementById("play_again")
+let player_win_card = document.getElementById("player_win");
+let com_win_card = document.getElementById("com_win");
+
 
 /** 
  * Zeichnet das komplette Spielfeld
@@ -51,6 +56,12 @@ function drawBoard() {
 
 function announce_win() {
     console.log('winner: ' + winner);
+    rematch_card.style.display = "block";
+    if(winner === 'player 1'){
+        player_win_card.style.display = "block";
+    }else{
+        com_win_card.style.display = "block";
+    }
 }
 
 function check_win() {
@@ -102,6 +113,11 @@ function createBoard() {
         drawBoard();
         locked = false;
     });
+}
+
+function resetGame(){
+    board = [];
+    winner = null;
 }
 
 function move(canvas, event) {
@@ -220,6 +236,12 @@ function sleep (time) {
   
 
 function main() {
+    rematch_card.style.display = "none";
+    player_win_card.style.display = "none";
+    com_win_card.style.display = "none";
+
+    play_again_button.addEventListener("click",resetGame)
+
     createBoard();
 }
 

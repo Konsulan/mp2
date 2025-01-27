@@ -9,6 +9,36 @@
 <body>
     <h1> Tic-Tac-Twist Denki MP2</h1>
     <canvas id="game" width="800" height="800"></canvas>
+    <div id="rematch_card" class="card">
+        <h2 id="player_win" >
+            You win!
+        </h2>
+        <h2 id="com_win">
+            COM wins!
+        </h2>
+        <button id="play_again">Try again</button>
+        
+    </div>
+
+    <div class="card banner">
+        <h2>Terms and Conditions</h2>
+
+        <ul>
+            <li>COM can overwrite your moves</li>
+            <li>COM can create new rows and columns</li>
+            <li>COM can</li>
+        </ul>
+
+        <button id="accept" class="button">Accept</button>
+        <button id="accept_all" class="button">Accept all</button>
+        <button class="button">Continue with recommended Settings</button>
+        <br>
+        <button id="edit_button">Edit</button>
+        <div id="game_settings">
+            <input type="checkbox" value="overwrite" checked>
+            <label>Allow overwrite</label>
+        </div>
+    </div>
 </body>
 
 <script src="js/main.js"></script>
