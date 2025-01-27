@@ -2,6 +2,10 @@ h1 {
     text-align: center;
 }
 
+p {
+    text-align: center;
+}
+
 #game {
     display: block;
     margin-left: auto;
