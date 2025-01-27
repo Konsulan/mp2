@@ -232,6 +232,11 @@ function move(canvas, event) {
 function sleep (time) {
     return new Promise((resolve) => setTimeout(resolve, time));
 }
+
+function acceptTerms(){
+    document.getElementById("terms_banner").style.display = "none";
+    localStorage.setItem("accepted_all", true);
+}
   
   
 
@@ -240,7 +245,15 @@ function main() {
     player_win_card.style.display = "none";
     com_win_card.style.display = "none";
 
-    play_again_button.addEventListener("click",resetGame)
+    play_again_button.addEventListener("click",resetGame);
+
+    if(localStorage.getItem("accepted_all")){
+        acceptTerms();
+    }
+
+    document.getElementById("accept").addEventListener("click", acceptTerms);
+    document.getElementById("accept_all").addEventListener("click", acceptTerms);
+    document.getElementById("continue").addEventListener("click", acceptTerms);
 
     createBoard();
 }
