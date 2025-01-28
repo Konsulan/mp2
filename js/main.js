@@ -56,12 +56,14 @@ function drawBoard() {
 
 function announce_win() {
     console.log('winner: ' + winner);
-    rematch_card.style.display = "block";
-    if(winner === 'player 1'){
-        player_win_card.style.display = "block";
-    }else{
-        com_win_card.style.display = "block";
-    }
+    setTimeout(function(){
+        rematch_card.style.display = "block";
+        if(winner === 'player 1'){
+            player_win_card.style.display = "block";
+        }else{
+            com_win_card.style.display = "block";
+        }
+    },1500);
 }
 
 function check_win() {
