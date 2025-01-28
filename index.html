@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1> Tic-Tac-Twist Denki MP2</h1>
-    <button id="settings">Settings</button>
+    <button id="settings" onclick="showTerms()">Settings</button>
     <canvas id="game" width="800" height="800"></canvas>
     <div id="rematch_card" class="card">
         <h2 id="player_win" >
@@ -36,14 +36,23 @@
             <li>COM always begins</li>
         </ul>
 
-        <button id="accept" class="button">Accept</button>
-        <button id="accept_all" class="button">Accept all</button>
-        <button id="continue" class="button">Continue with recommended Settings</button>
+        <button id="accept" onclick="acceptTerms()" class="button sticky accept">Accept</button>
+        <button id="accept_all" onclick="acceptTerms()" class="button sticky">Accept all</button>
+        <button id="continue" onclick="acceptTerms()" class="button sticky">Continue with recommended Settings</button>
         <br>
-        <button id="edit_button">Edit</button>
-        <div id="game_settings">
+        <button id="edit_button" onclick="showCheckboxes()">Edit</button>
+        <div id="game_settings" style="text-align: left; display:none;">
             <input type="checkbox" value="overwrite" checked>
             <label>Allow overwrite</label>
+            <br>
+            <input type="checkbox" value="create" checked>
+            <label>Allow new rows and columns</label>
+            <br>
+            <input type="checkbox" value="begin_first" checked>
+            <label>COM begins first</label>
+            <br>
+            <button id="allow_all" onclick="acceptTerms()" class="button accept">Allow all</button>
+            <button class="button" hidden>Save</button>
         </div>
     </div>
 </body>
