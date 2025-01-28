@@ -68,6 +68,9 @@ h2 {
 .button {
     padding: 10px;
     border-radius: 4px;
+}
+
+.sticky {
     position:sticky;
     bottom:0px;
 }
@@ -76,7 +79,7 @@ ul {
     text-align: left;
 }
 
-#accept {
+.accept {
     background-color: #008000;
     color:white;
 }

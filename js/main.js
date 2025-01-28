@@ -116,8 +116,7 @@ function createBoard() {
 }
 
 function resetGame(){
-    board = [];
-    winner = null;
+    location.reload();
 }
 
 function move(canvas, event) {
@@ -241,6 +240,11 @@ function acceptTerms(){
 function showTerms(){
     document.getElementById("terms_banner").style.display = "block";
 }
+
+function showCheckboxes(){
+    console.log("show")
+    document.getElementById("game_settings").style.display = "block";
+}
   
   
 
@@ -254,10 +258,6 @@ function main() {
     if(localStorage.getItem("accepted_all")){
         acceptTerms();
     }
-    document.getElementById("settings").addEventListener("click",showTerms);
-    document.getElementById("accept").addEventListener("click", acceptTerms);
-    document.getElementById("accept_all").addEventListener("click", acceptTerms);
-    document.getElementById("continue").addEventListener("click", acceptTerms);
 
     createBoard();
 }
