@@ -242,8 +242,22 @@ function showTerms(){
 }
 
 function showCheckboxes(){
-    console.log("show")
     document.getElementById("game_settings").style.display = "block";
+}
+
+function saveSettings(){
+    let overwrite = document.getElementById("overwrite").checked;
+    let allow_new_rows_columns = document.getElementById("create").checked;
+    let com_begins = document.getElementById("begin_first").checked;
+    if(overwrite && allow_new_rows_columns && com_begins){
+        localStorage.setItem("accepted_all", true);
+    }else{
+        localStorage.setItem("accepted_all", false);
+    }
+    localStorage.setItem("allow_overwrite", overwrite);
+    localStorage.setItem("allow_new_rows__columns", allow_new_rows_columns);
+    localStorage.setItem("com_begins", com_begins);
+    document.getElementById("terms_banner").style.display = "none";
 }
   
   
@@ -254,6 +268,16 @@ function main() {
     com_win_card.style.display = "none";
 
     play_again_button.addEventListener("click",resetGame);
+
+    if(!localStorage.getItem("allow_overwrite")){
+        localStorage.setItem("allow_overwrite", true);
+    }
+    if(!localStorage.getItem("allow_new_rows__columns")){
+        localStorage.setItem("allow_new_rows__columns", true);
+    }
+    if(!localStorage.getItem("com_begins")){
+        localStorage.setItem("com_begins", true);
+    }
 
     if(localStorage.getItem("accepted_all")){
         acceptTerms();

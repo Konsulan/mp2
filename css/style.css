@@ -101,3 +101,9 @@ ul {
     border-width: 1px;
     border-color: #dfcfcf1f;
 }
+
+#save_settings {
+    background-color: transparent;
+    border-width: 0px;
+    color:#f0f0f0;
+}
